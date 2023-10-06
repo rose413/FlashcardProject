@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import cards from './assets/components/cardData';
+import { useState } from 'react';
+import Flashcard from './assets/components/flashcard';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false); // Add isFlipped state
+
+  const handleNextCard = () => {
+    setCurrentCardIndex((prevIndex) => (prevIndex + 1));
+    setIsFlipped(false);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App">
+      <h1>French Cuisine Quiz</h1>
+      <h2>How good is your French? Test your vocabulary on food here!</h2>
+      <h3>Number of cards: 10</h3>
+      <br></br>
+      <Flashcard 
+        {...cards[currentCardIndex]} 
+        isFlipped={isFlipped} 
+        setIsFlipped={setIsFlipped} 
+      />
+      <button onClick={handleNextCard}>Next</button>
+    </div>
   )
 }
 
-export default App
+export default App;
