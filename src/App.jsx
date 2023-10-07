@@ -8,6 +8,8 @@ const App = () => {
   const [isFlipped, setIsFlipped] = useState(false); // Add isFlipped state
   const [userGuess, setUserGuess] = useState('');
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
 
   const handleNextCard = () => {
     if (currentCardIndex < cards.length - 1) {
@@ -30,8 +32,11 @@ const App = () => {
   const handleGuessSubmit = () => {
     if (userGuess.trim().toLowerCase() === cards[currentCardIndex].back.toLowerCase()) {
       setIsAnswerCorrect(true);
+      setCurrentStreak(currentStreak + 1);
+      setLongestStreak(Math.max(longestStreak, currentStreak + 1));
     } else {
       setIsAnswerCorrect(false);
+      setCurrentStreak(0);
     }
   };
 
@@ -55,11 +60,13 @@ const App = () => {
               value={userGuess}
               onChange={(e) => setUserGuess(e.target.value)}
             />
-            <button onClick={handleGuessSubmit}>Submit</button>
+            <button onClick={handleGuessSubmit} id="Guess">Submit</button>
           </>
         )}
         {isAnswerCorrect === true && <p className="correct">Correct!</p>}
         {isAnswerCorrect === false && <p className="incorrect">Incorrect!</p>}
+        <p>Current Streak: {currentStreak}</p>
+        <p>Longest Streak: {longestStreak}</p>
       </div>
       <button onClick={handlePreviousCard} disabled={currentCardIndex === 0}>Back</button>
       <button onClick={handleNextCard}>Next</button>

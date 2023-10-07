@@ -45,3 +45,9 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+input{
+  width: 150px;
+  height: 30px;
+  margin: auto;;
+}
