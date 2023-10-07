@@ -1,15 +1,24 @@
 import './App.css';
-import cards from './assets/components/cardData';
+import cards from './components/cardData';
 import { useState } from 'react';
-import Flashcard from './assets/components/flashcard';
+import Flashcard from './components/flashcard';
 
 const App = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false); // Add isFlipped state
 
   const handleNextCard = () => {
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1));
-    setIsFlipped(false);
+    if (currentCardIndex < cards.length - 1) {
+      setCurrentCardIndex((prevIndex) => prevIndex + 1);
+      setIsFlipped(false);
+    }
+  };
+
+  const handlePreviousCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex((prevIndex) => prevIndex - 1);
+      setIsFlipped(false);
+    }
   };
 
   return (
@@ -23,6 +32,7 @@ const App = () => {
         isFlipped={isFlipped} 
         setIsFlipped={setIsFlipped} 
       />
+      <button onClick={handlePreviousCard} disabled={currentCardIndex === 0}>Back</button>
       <button onClick={handleNextCard}>Next</button>
     </div>
   )
